@@ -21,7 +21,4 @@ void KS108_InitDisplay (void);
 void KS108_WriteInstruction (uint8_t instruction, CS_number CS_nr );
 void KS108_WriteDsiplay (uint8_t data, CS_number CS_nr);
 
-void KS108_putchar(char data, uint8_t x, uint8_t line);
-void KS108_PutString(char * str, uint8_t x, uint8_t line);
-
 #endif /* KS108_KS108_H_ */
