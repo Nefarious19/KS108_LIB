@@ -132,13 +132,107 @@ void KS108_putHex(int32_t num , uint8_t x, uint8_t y, uint8_t size )
 
 void KS108_putFloat( float num , uint8_t precision, uint8_t x, uint8_t y, uint8_t size )
 {
-	int32_t digits = (int)num;
-	num -= (float)digits;
-	while(precision--);
+	struct fakeFloat
+	{
+		uint8_t  sign;
+		int32_t  intPart;
+		int32_t  tempIntPart;
+		uint32_t fractPart;
+		uint32_t tempFractPart;
+		char * wsk;
+		uint32_t mult10;
+		uint8_t  tempPrec;
+		uint8_t  intPartLen;
+		uint8_t  fractPartLen;
+	};
+
+	struct fakeFloat f = {0};
+
+	f.tempPrec = precision;
+
+	f.sign = (uint8_t)( ((*(uint32_t * )(&num))>>31) & 0x01 );
+
+	f.intPart = (int)num;
+
+	f.mult10 = 1;
+
+	while(f.tempPrec--)
+	{
+		f.mult10 *= 10;
+	}
+
+	num -= (float)f.intPart;
+
+	num = num * (float)(f.mult10);
+
+	*((uint32_t *)(&num)) &= ~(1<<31);
+
+	f.fractPart = (uint32_t)num;
+
+	f.tempIntPart = f.intPart;
+	f.tempFractPart = f.fractPart;
+
+	while(f.tempIntPart)
+	{
+		f.intPartLen++;
+		f.tempIntPart /= 10;
+	}
+
+	while(f.tempFractPart)
+	{
+		f.fractPartLen++;
+		f.tempFractPart /= 10;
+	}
+
+
+
+	f.wsk = malloc( sizeof(char) * (f.intPartLen + precision + 3) );
+	memset(f.wsk , 0, sizeof(char) * (f.intPartLen + precision + 3) );
+
+	if(f.sign)
+	{
+		f.wsk[0] = '-';
+		f.intPart *= (-1);
+	}
+
+
+
+
+
+
+	if(precision)
+	{
+		f.wsk[ f.intPartLen + f.sign ] = '.';
+
+
+		if(f.fractPart%10 > 4) f.fractPart++;
+
+		while(f.fractPart)
+		{
+			f.wsk[ f.intPartLen + f.sign + precision] = (char)((f.fractPart%10)+'0');
+			f.fractPart /= 10;
+			precision--;
+		}
+		while(precision)
+		{
+			f.wsk[ f.intPartLen + f.sign + precision] = '0';
+			precision--;
+		}
+
+
+	}
+
+	while(f.intPart)
+	{
+		f.wsk[ f.intPartLen + f.sign -1] = (char)((f.intPart%10)+'0');
+		f.intPartLen--;
+		f.intPart /= 10;
+	}
+
+	KS108_putStr(f.wsk,x,y,size);
+
+	free(f.wsk);
 }
-
-
-
 
 
 

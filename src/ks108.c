@@ -161,7 +161,6 @@ static uint8_t KS108_ReadDsiplay ( CS_number CS_nr )
 
 void KS108_InitDisplay (void)
 {
-
 	_delay_init(48000000UL);
 	KS108_GPIO_INIT();
 	_delay_ms(100);
@@ -178,6 +177,4 @@ void KS108_InitDisplay (void)
 	KS108_WriteInstruction(KS108_DISPLAY_ON ,CS2);
 
 	KS108_fillDisplay(0x00);
-
-
 }

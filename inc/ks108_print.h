@@ -12,7 +12,7 @@ void KS108_putChr(char   data, uint8_t x, uint8_t y, uint8_t size );
 void KS108_putStr(char * data, uint8_t x, uint8_t y, uint8_t size );
 void KS108_putInt(int32_t num , uint8_t x, uint8_t y, uint8_t size );
 void KS108_putHex(int32_t num , uint8_t x, uint8_t y, uint8_t size );
-void KS108_putFloat( float num , uint8_t x, uint8_t y, uint8_t size );
+void KS108_putFloat( float num , uint8_t precision, uint8_t x, uint8_t y, uint8_t size );
 
 
 
