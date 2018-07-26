@@ -8,7 +8,6 @@
 #include "stm32f0xx.h"
 
 #include "../inc/ks108.h"
-#include "../inc/ks108_font.h"
 #include "../inc/ks108_utilities.h"
 #include "../inc/ks108_gfx.h"
 
@@ -156,55 +155,9 @@ static uint8_t KS108_ReadDsiplay ( CS_number CS_nr )
 
 #endif
 
-void KS108_putchar(char data, uint8_t x, uint8_t line)
-{
 
-   CS_number CS_pin;
-   uint16_t tab_index = 0;
-   uint8_t temp_x = 0;
-   uint8_t temp_y = 0;
 
-   if( ( x > KS108_WIDTH - 5 ) || ( KS108_LINES-1 > 7 ) ) return;
 
-   //UNUSED macro here because of propability of use temp_y in future
-   UNUSED(temp_y);
-
-   tab_index = ((uint16_t)(data - 0x20)*5);
-
-   temp_x = x;
-
-   if( x < 64 ) CS_pin = CS1;
-   else 		CS_pin = CS2;
-
-   KS108_WriteInstruction( KS108_SET_X_ADR(line), CS_pin );
-   KS108_WriteInstruction( KS108_SET_Y_ADR(x), CS_pin );
-
-   for(uint8_t i = 0; i < 5; i++)
-   {
-      KS108_WriteDsiplay(KS108_Font5x7[tab_index+i], CS_pin);
-      temp_x++;
-      if( temp_x == 64 )
-      {
-    	  CS_pin = CS2;
-    	  KS108_WriteInstruction( KS108_SET_Y_ADR(0), CS_pin );
-    	  KS108_WriteInstruction( KS108_SET_X_ADR(line), CS_pin );
-      }
-      else if(temp_x > 64) CS_pin = CS2;
-      else 	CS_pin = CS1;
-   }
-}
-
-void KS108_PutString(char * str, uint8_t x, uint8_t line)
-{
-	char * wsk = str;
-	char chktr = 0;
-
-	while( ( chktr = *wsk++ ) )
-	{
-		KS108_putchar(chktr, x, line);
-		x = x+6;
-	}
-}
 
 void KS108_InitDisplay (void)
 {
