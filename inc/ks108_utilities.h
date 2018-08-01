@@ -1,3 +1,15 @@
+/****************************************************************
+ * @file   KS108_utilities.h
+ *
+ * @author Nefarious19
+ * @date   01.08.2018
+ * @brief  This file contains some #defines used by other source
+ *         files, some API configuration options and pin
+ *         assigment definitions.
+ *
+ *
+ ****************************************************************/
+
 #ifndef KS108_KS108_UTILITIES_H_
 #define KS108_KS108_UTILITIES_H_
 
@@ -25,22 +37,22 @@
  ****************************************************************/
 #define DATA_PORT  GPIOB
 #define CTRL_PORT  GPIOB
-#define	BACKL_PORT GPIOA
+#define    BACKL_PORT GPIOA
 
-#define  DATA_D0	0
-#define  DATA_D1	1
-#define  DATA_D2	2
-#define  DATA_D3	3
+#define  DATA_D0    0
+#define  DATA_D1    1
+#define  DATA_D2    2
+#define  DATA_D3    3
 #define  DATA_D4    4
-#define  DATA_D5	5
-#define  DATA_D6	6
-#define  DATA_D7	7
+#define  DATA_D5    5
+#define  DATA_D6    6
+#define  DATA_D7    7
 
-#define  CTRL_CS1	11
-#define  CTRL_CS2	12
-#define  CTRL_RW	8
-#define  CTRL_DI	9
-#define  CTRL_E		10
+#define  CTRL_CS1    11
+#define  CTRL_CS2    12
+#define  CTRL_RW    8
+#define  CTRL_DI    9
+#define  CTRL_E        10
 #define  CTRL_RST   13
 
 #define  BACKL_GPIO 11
@@ -54,17 +66,17 @@
 #define KS108_Backlight_OFF() BACKL_PORT->ODR |= SBBVAL(0x01,BACKL_GPIO,1)
 
 
-#define KS108_CS1_LO	CTRL_PORT->ODR &= ~(1<<CTRL_CS1)
-#define KS108_CS1_HI	CTRL_PORT->ODR |= (1<<CTRL_CS1)
+#define KS108_CS1_LO    CTRL_PORT->ODR &= ~(1<<CTRL_CS1)
+#define KS108_CS1_HI    CTRL_PORT->ODR |= (1<<CTRL_CS1)
 
-#define KS108_CS2_LO	CTRL_PORT->ODR &= ~(1<<CTRL_CS2)
+#define KS108_CS2_LO    CTRL_PORT->ODR &= ~(1<<CTRL_CS2)
 #define KS108_CS2_HI    CTRL_PORT->ODR |= (1<<CTRL_CS2)
 
 
-#define KS108_CS_Off()	{									\
-							CTRL_PORT->ODR |= (1<<CTRL_CS1);\
-							CTRL_PORT->ODR |= (1<<CTRL_CS2);\
-						}
+#define KS108_CS_Off() {                                  \
+                          CTRL_PORT->ODR |= (1<<CTRL_CS1);\
+                          CTRL_PORT->ODR |= (1<<CTRL_CS2);\
+                       }
 
 
 #define KS108_DI_HI   CTRL_PORT->ODR |= (1<<CTRL_DI)
@@ -73,8 +85,8 @@
 #define KS108_RW_HI  CTRL_PORT->ODR |= (1<<CTRL_RW)
 #define KS108_RW_LO  CTRL_PORT->ODR &= ~(1<<CTRL_RW)
 
-#define KS108_CLR_E	 CTRL_PORT->ODR &= ~(1<<CTRL_E)
-#define KS108_SET_E	 CTRL_PORT->ODR |= (1<<CTRL_E)
+#define KS108_CLR_E     CTRL_PORT->ODR &= ~(1<<CTRL_E)
+#define KS108_SET_E     CTRL_PORT->ODR |= (1<<CTRL_E)
 
 #define KS108_CLR_RST CTRL_PORT->ODR &= ~(1<<CTRL_RST)
 #define KS108_SET_RST CTRL_PORT->ODR |= (1<<CTRL_RST)
@@ -88,8 +100,8 @@
 #define KS108_HEIGHT ( 64  )
 #define KS108_LINES  ( KS108_HEIGHT / 8 )
 
-#define KS108_DISPLAY_ON	0x3F
-#define KS108_DISPLAY_OFF	0x3E
+#define KS108_DISPLAY_ON    0x3F
+#define KS108_DISPLAY_OFF    0x3E
 
 #define KS108_SET_Y_ADR(y_adr) (0x40 | y_adr)
 #define KS108_SET_X_ADR(x_adr) (0xB8 | x_adr)
@@ -100,11 +112,11 @@
 /****************************************************************
  * @brief UNUSED() MACRO
  * UNUSED() macro that can be used to avoid copmiler warnigs
- * according to unused parameters
+ * caused by unused parameters
  ****************************************************************/
-#define UNUSED(x) 	{ 				\
-						x = x + 0; 	\
-					}
+#define UNUSED(x){ \
+        x = x + 0; \
+        }
 
 
 #endif /* KS108_KS108_UTILITIES_H_ */
