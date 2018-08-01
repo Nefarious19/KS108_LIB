@@ -1,22 +1,31 @@
-/*
- * ks108_utilities.h
- *
- *  Created on: 16.07.2018
- *      Author: rafal
- */
-
 #ifndef KS108_KS108_UTILITIES_H_
 #define KS108_KS108_UTILITIES_H_
 
+/****************************************************************
+ * @brief Configuration of API
+ *
+ * #define's that you can use to configure what API will be
+ * compiled
+ ****************************************************************/
 #define USE_READ_FROM_PORT_FEATURES 0
 
+/****************************************************************
+ * @brief SBBVAL and CBBVAL macros used for bit manipulation
+ ****************************************************************/
+#define  SBBVAL( value_to_shift, nr_of_beginning , begining_mul )   (value_to_shift<<(nr_of_beginning*begining_mul))
+#define  CBBVAL( value_to_shift, nr_of_beginning , begining_mul )   (~(value_to_shift<<(nr_of_beginning*begining_mul)))
+
+
+/****************************************************************
+ * @brief Here you can assign your pin'o'logy
+ * This version of library supports situation when data pins are
+ * located on the same port and on pins from 0 to 7 (8 bits).
+ * This will be changed in future but universality of pins assigment
+ * will decrease library performance.
+ ****************************************************************/
 #define DATA_PORT  GPIOB
 #define CTRL_PORT  GPIOB
 #define	BACKL_PORT GPIOA
-#define BACKL_GPIO 11
-
-#define  SBBVAL( value_to_shift, nr_of_beginning , begining_mul )   (value_to_shift<<(nr_of_beginning*begining_mul))
-#define  CBBVAL( value_to_shift, nr_of_beginning , begining_mul )   (~(value_to_shift<<(nr_of_beginning*begining_mul)))
 
 #define  DATA_D0	0
 #define  DATA_D1	1
@@ -34,7 +43,13 @@
 #define  CTRL_E		10
 #define  CTRL_RST   13
 
+#define  BACKL_GPIO 11
 
+
+/****************************************************************
+ * @brief pseudo macro-functions that are used to manipulate
+ * control pins
+ ****************************************************************/
 #define KS108_Backlight_ON()  BACKL_PORT->ODR &= CBBVAL(0x01,BACKL_GPIO,1)
 #define KS108_Backlight_OFF() BACKL_PORT->ODR |= SBBVAL(0x01,BACKL_GPIO,1)
 
@@ -65,8 +80,10 @@
 #define KS108_SET_RST CTRL_PORT->ODR |= (1<<CTRL_RST)
 
 
-//KS108 Commands
-
+/****************************************************************
+ * @brief KS0108 commands
+ * KS0108 display commands that are used to configure display
+ ****************************************************************/
 #define KS108_WIDTH  ( 128 )
 #define KS108_HEIGHT ( 64  )
 #define KS108_LINES  ( KS108_HEIGHT / 8 )
@@ -80,7 +97,11 @@
 
 #define KS108_DISPLAY_BSY   0x80
 
-///////////////////////////
+/****************************************************************
+ * @brief UNUSED() MACRO
+ * UNUSED() macro that can be used to avoid copmiler warnigs
+ * according to unused parameters
+ ****************************************************************/
 #define UNUSED(x) 	{ 				\
 						x = x + 0; 	\
 					}
