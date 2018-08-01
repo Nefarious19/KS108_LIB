@@ -9,4 +9,18 @@ If you see this as problem, just search for another library.
 
 # 3. This seciton will describe API of the library.
 
+##	3.1. How to setup example project
+	
+First of all, you need to include proper *.h files in your code.
+
+* ks108.h --> this file contains basic API to initialize library.
+* 
+
+```c
+	void KS108_InitDisplay (void);
+    void KS108_WriteInstruction (uint8_t instruction, CS_number CS_nr );
+    void KS108_WriteDsiplay (uint8_t data, CS_number CS_nr);
+```
+
+
 
