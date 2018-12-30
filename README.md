@@ -16,7 +16,8 @@ This section describes avaliable programming interface.
 First of all, you need to include proper *.h files in your code.
 
 * ks108.h --> this file contains basic API to initialize library.
-
+* internal/ks108_icons.h --> this file contains some icons that can be used by user 
+  with KS108_loadSmallBitmap() func.
 
 
 
